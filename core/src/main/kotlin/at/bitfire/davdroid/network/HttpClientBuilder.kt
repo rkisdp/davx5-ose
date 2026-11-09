@@ -265,10 +265,9 @@ class HttpClientBuilder private constructor(
     // actual client building
 
     private fun buildConnectionSecurity(okBuilder: OkHttpClient.Builder) {
-        // Allow cleartext and TLS 1.2+
+        // Allow TLS 1.2+ only
         okBuilder.connectionSpecs(
             listOf(
-                ConnectionSpec.CLEARTEXT,
                 ConnectionSpec.MODERN_TLS
             )
         )

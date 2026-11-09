@@ -6,6 +6,8 @@ package at.bitfire.davdroid.sync.adapter
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
+import android.os.Process
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EarlyEntryPoint
 import dagger.hilt.android.EarlyEntryPoints
@@ -29,7 +31,9 @@ abstract class SyncAdapterService: Service() {
         entryPoint.syncAdapter()
     }
 
-    override fun onBind(intent: Intent?) = syncAdapter.getBinder()
+    override fun onBind(intent: Intent?) =
+        if (Binder.getCallingUid() != Process.SYSTEM_UID) null
+        else syncAdapter.getBinder()
 
 }
 

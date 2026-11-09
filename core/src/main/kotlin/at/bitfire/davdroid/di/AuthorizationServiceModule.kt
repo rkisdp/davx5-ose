@@ -13,8 +13,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import net.openid.appauth.AppAuthConfiguration
 import net.openid.appauth.AuthorizationService
-import java.net.HttpURLConnection
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 /**
  * AppAuth-Android integration
@@ -38,8 +38,11 @@ class AuthorizationServiceModule {
             context,
             AppAuthConfiguration.Builder()
                 .setConnectionBuilder { uri ->
+                    require(uri.scheme.equals("https", ignoreCase = true)) {
+                        "Insecure HTTP connections are not allowed for OAuth endpoints: $uri"
+                    }
                     val url = URL(uri.toString())
-                    (url.openConnection() as HttpURLConnection).apply {
+                    (url.openConnection() as HttpsURLConnection).apply {
                         setRequestProperty("User-Agent", productIds.httpUserAgent)
                     }
                 }.build()
