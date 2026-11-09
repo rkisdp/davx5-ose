@@ -10,7 +10,9 @@ import android.accounts.AccountManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.Bundle
+import android.os.Process
 
 import at.bitfire.davdroid.R
 
@@ -23,7 +25,8 @@ class AddressBookAuthenticatorService: Service() {
     }
 
     override fun onBind(intent: Intent?) =
-        accountAuthenticator.iBinder.takeIf { intent?.action == AccountManager.ACTION_AUTHENTICATOR_INTENT }
+        if (Binder.getCallingUid() != Process.SYSTEM_UID) null
+        else accountAuthenticator.iBinder.takeIf { intent?.action == AccountManager.ACTION_AUTHENTICATOR_INTENT }
 
 
     private class AccountAuthenticator(

@@ -52,7 +52,9 @@
         <activity android:name=".ui.intro.IntroActivity" />
         <activity
             android:name=".ui.AccountsActivity"
-            android:exported="true">
+            android:exported="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -68,7 +70,9 @@
             android:name=".ui.AppSettingsActivity"
             android:label="@string/app_settings"
             android:parentActivityName=".ui.AccountsActivity"
-            android:exported="true">
+            android:exported="false"
+            android:taskAffinity=""
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -96,7 +100,9 @@
             android:name=".ui.setup.LoginActivity"
             android:parentActivityName=".ui.AccountsActivity"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
@@ -123,7 +129,9 @@
         <activity
             android:name=".ui.account.AccountActivity"
             android:parentActivityName=".ui.AccountsActivity"
-            android:exported="true">
+            android:exported="false"
+            android:taskAffinity=""
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".ui.account.CollectionActivity"
@@ -143,7 +151,9 @@
 
         <activity
             android:name=".ui.webdav.WebdavMountsActivity"
-            android:exported="true"
+            android:exported="false"
+            android:taskAffinity=""
+            android:launchMode="singleTask"
             android:parentActivityName=".ui.AccountsActivity" />
         <activity
             android:name=".ui.webdav.AddWebdavMountActivity"
@@ -207,6 +217,7 @@
         <service
             android:name=".sync.adapter.TasksOrgSyncAdapterService"
             android:exported="true"
+            android:permission="android.permission.BIND_SYNC_ADAPTER"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
@@ -231,7 +242,7 @@
         </service>
         <service
             android:name=".sync.adapter.ContactsSyncAdapterService"
-            android:exported="true"
+            android:exported="false"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
